@@ -48,6 +48,17 @@ export default Server(
             res.json(response);
         });
 
+        app.post('/quotes', async (req, res) => {
+            ic.setOutgoingHttpOptions({
+                maxResponseBytes: 20_000n,
+                cycles: 500_000_000_000n,
+                transformMethodName: 'transform'
+            });
+
+            const response = await (await fetch(`https://gist.githubusercontent.com/kouseina/3dde9dec2c9896325990bb6f2902a8c9/raw/47fe9660fbd6afe0ce63f8e8fd80f44cc126f06d/quotes.json`)).json();
+            res.json(response);
+        })
+
         app.use(express.static('/dist'));
         return app.listen();
     },

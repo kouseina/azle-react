@@ -3,16 +3,31 @@ import { useState } from 'react';
 function App() {
   const [greeting, setGreeting] = useState('');
   const [location, setLocation] = useState('');
+  const [quotes, setQuotes] = useState('');
 
   function handleSubmit(event: any) {
     event.preventDefault();
     const name = event.target.elements.name.value;
     const location = event.target.elements.location.value;
+
     fetch(`${import.meta.env.VITE_CANISTER_URL}/greet?name=${name}&location=${location}`)
       .then(response => response.json()).then((json) => {
         setGreeting(json.greeting)
         setLocation(json.location)
       });
+
+      fetch(`${import.meta.env.VITE_CANISTER_URL}/quotes`, {
+        method: 'POST',
+      }).then(response => response.json()).then((json) => {
+        console.log(`json : ${json}`)
+          setQuotes(json[0].en);
+        })
+
+
+      // fetch(`${import.meta.env.VITE_CANISTER_URL}/quotes`)
+      // .then(response => response.json()).then((json) => {
+      //   setQuotes(json[0].en)
+      // });
   }
 
   return (
@@ -29,6 +44,8 @@ function App() {
       </form>
       <section id="greeting">{greeting}</section>
       <section id="location">{location}</section>
+      <br />
+      <section id="quotes">{quotes}</section>
     </main >
   );
 }
