@@ -13,7 +13,9 @@ export default Server(
         app.use(express.json());
 
         let phonebook = {
-            'Alice': { 'phone': '123-456-789', 'added': new Date() }
+            'Alice': { 'phone': '123-456-789', 'added': new Date() },
+            'Salman': { 'phone': '987-654-321', 'added': '2024-07-01T00:00:00Z' },
+            'Daffa': { 'phone': '728-111-111', 'added': '2023-07-01T00:00:00Z' },
         };
 
         app.get('/contacts', (_req, res) => {
@@ -31,7 +33,7 @@ export default Server(
         });
 
         app.get('/greet', (req, res) => {
-            res.json({ greeting: `Hello, ${req.query.name}` });
+            res.json({ greeting: `Hello, ${req.query.name}`, location: `Welcome to ${req.query.location}` });
         });
 
         app.post('/price-oracle', async (req, res) => {
